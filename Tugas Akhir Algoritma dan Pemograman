@@ -1,0 +1,139 @@
+// Nama Mahasiswa  : FALADINA SEPTIANI
+// NIM             : 12250523599
+// Kelas           : IV A
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+void tampilkanMenuIndonesia(float saldo) {
+    printf("\n===== Selamat Datang di ATM FALDIN =====\n");
+    printf("1. Cek Saldo\n");
+    printf("2. Tarik Tunai\n");
+    printf("3. Setor Tunai\n");
+    printf("4. Top Up E-Wallet\n");
+    printf("5. Exit\n");
+    
+    printf("Pilih menu / Choose menu: ");
+}
+
+void tampilkanMenuInggris(float saldo) {
+    printf("\n===== Welcome to FALDIN ATM =====\n");
+    printf("1. Check Balance\n");
+    printf("2. Withdraw Cash\n");
+    printf("3. Deposit Cash\n");
+    printf("4. Top Up E-Wallet\n");
+    printf("5. Exit\n");
+    printf("Select menu: ");
+}
+
+void clearScreen() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+void tampilkanMenuIndonesia(float saldo);
+void tampilkanMenuInggris(float saldo);
+void clearScreen();
+
+int main() {
+    int pilihan, exit = 0, bahasa;
+    float saldo = 1000000;
+    float jumlah;
+    char password[7], inputPassword[7];
+
+    strcpy(password, "171068");
+
+    printf("Pilih Bahasa / Choose Language:\n");
+    printf("1. Bahasa Indonesia\n");
+    printf("2. English\n");
+    printf("Pilihan Anda / Your choice: ");
+    scanf("%d", &bahasa);
+
+    clearScreen();
+
+    printf("Masukkan password: ");
+    scanf("%s", inputPassword);
+
+    if(strcmp(password, inputPassword) != 0) {
+        printf("Password salah! Masukkan Ulang Password! .\n");
+    }
+
+    while(!exit) {
+        if(bahasa == 1) {
+            tampilkanMenuIndonesia(saldo);
+        } else if(bahasa == 2) {
+            tampilkanMenuInggris(saldo);
+        } else {
+            printf("Bahasa tidak valid / Invalid language!\n");
+            break;
+        }
+
+        scanf("%d", &pilihan);
+
+        clearScreen();
+
+        switch(pilihan) {
+            case 1:
+                printf("Saldo Anda saat ini / Your current balance: Rp%.2f\n", saldo);
+                break;
+            case 2:
+                printf("Masukkan jumlah penarikan / Enter withdrawal amount: ");
+                scanf("%f", &jumlah);
+                if(jumlah > saldo) {
+                    printf("Saldo tidak cukup! / Insufficient balance!\n");
+                } else {
+                    saldo -= jumlah;
+                    printf("Penarikan berhasil! Saldo Anda / Withdrawal successful! Your balance: Rp%.2f\n", saldo);
+                }
+                break;
+            case 3:
+                printf("Masukkan jumlah setoran / Enter deposit amount: ");
+                scanf("%f", &jumlah);
+                saldo += jumlah;
+                printf("Setoran berhasil! Saldo Anda / Deposit successful! Your balance: Rp%.2f\n", saldo);
+                break;
+            case 4:
+                printf("Pilih E-Wallet / Choose E-Wallet:\n");
+                printf("1. OVO\n");
+                printf("2. ShopeePay\n");
+                printf("3. DANA\n");
+                printf("Pilihan Anda / Your choice: ");
+                int ewallet;
+                scanf("%d", &ewallet);
+                
+                if(ewallet >= 1 && ewallet <= 3) {
+                    printf("Masukkan jumlah top up / Enter top-up amount: ");
+                    scanf("%f", &jumlah);
+                    if(jumlah > saldo) {
+                        printf("Saldo tidak cukup! / Insufficient balance!\n");
+                    } else {
+                        saldo -= jumlah;
+                        switch(ewallet) {
+                            case 1:
+                                printf("Top up OVO sebesar Rp%.2f berhasil! / Top up OVO for Rp%.2f successful!\n", jumlah);
+                                break;
+                            case 2:
+                                printf("Top up ShopeePay sebesar Rp%.2f berhasil! / Top up ShopeePay for Rp%.2f successful!\n", jumlah);
+                                break;
+                            case 3:
+                                printf("Top up DANA sebesar Rp%.2f berhasil! / Top up DANA for Rp%.2f successful!\n", jumlah);
+                                break;
+                        }
+                        printf("Saldo Anda / Your balance: Rp%.2f\n", saldo);
+                    }
+                } else {
+                    printf("Pilihan E-Wallet tidak valid! / Invalid E-Wallet choice!\n");
+                }
+                
+                break;
+            case 5:
+                exit = 1;
+                break;
+            default:
+                printf("Pilihan tidak valid! / Invalid choice!\n");
+        }
+    }
+}
